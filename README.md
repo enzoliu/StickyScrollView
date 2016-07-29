@@ -20,7 +20,8 @@ pod 'StickyScrollView'
 ```
 
 ## Usage
-```
+** Swift 2.x **
+```swift
 import StickyScrollView
 
 // you should use UIScrollViewDelegate here.
@@ -45,6 +46,11 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 }
 
 ```
+** Object-C **
+TBD
+
+## Inspired from
+- <https://github.com/jamztang/CSStickyHeaderFlowLayout>
 
 ## Example
 
