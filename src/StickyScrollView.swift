@@ -7,29 +7,29 @@
 
 import UIKit
 
-class StickyScrollView: UIScrollView {
-    weak var imgView: UIImageView?
-    var stickyHeight: CGFloat = 0
+public class StickyScrollView: UIScrollView {
+    private weak var imgView: UIImageView?
+    private var stickyHeight: CGFloat = 0
 
     // Image scale ratio, 0 ~ 1.
-    var imageScaleRatio: CGFloat = 1
+    private var imageScaleRatio: CGFloat = 1
 
     // Image alpha ratio, 0 ~ 1
-    var imageAlphaRatio: CGFloat = 0.7
+    private var imageAlphaRatio: CGFloat = 0.7
 
     // Image y scale offset moving ratio, 0 ~ 1
-    var imageParallelRatio: CGFloat = 0.3
+    private var imageParallelRatio: CGFloat = 0.3
 
     /// This interceptor concept is referenced from :
     /// - see: http://stackoverflow.com/questions/26953559/in-swift-how-do-i-have-a-uiscrollview-subclass-that-has-an-internal-and-externa
-    class DelegateProxy: NSObject, UIScrollViewDelegate {
+    public class DelegateProxy: NSObject, UIScrollViewDelegate {
         weak var userDelegate: UIScrollViewDelegate?
 
-        override func respondsToSelector(aSelector: Selector) -> Bool {
+        public override func respondsToSelector(aSelector: Selector) -> Bool {
             return super.respondsToSelector(aSelector) || userDelegate?.respondsToSelector(aSelector) == true
         }
 
-        override func forwardingTargetForSelector(aSelector: Selector) -> AnyObject? {
+        public override func forwardingTargetForSelector(aSelector: Selector) -> AnyObject? {
             if userDelegate?.respondsToSelector(aSelector) == true {
                 return userDelegate
             } else {
@@ -42,7 +42,7 @@ class StickyScrollView: UIScrollView {
 
          - parameter scrollView: UIScrollView
          */
-        func scrollViewDidScroll(scrollView: UIScrollView) {
+        public func scrollViewDidScroll(scrollView: UIScrollView) {
             if let sc = scrollView as? StickyScrollView {
                 sc.updateFrame()
             }
@@ -59,7 +59,7 @@ class StickyScrollView: UIScrollView {
 
      - returns: An initialized view object.
      */
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         super.delegate = delegateProxy
 
@@ -81,13 +81,13 @@ class StickyScrollView: UIScrollView {
 
      - returns: self
      */
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         super.delegate = delegateProxy
     }
 
     /// Override getter and setter to redirect to interceptor.
-    override var delegate: UIScrollViewDelegate? {
+    public override var delegate: UIScrollViewDelegate? {
         get {
             return delegateProxy.userDelegate
         }
@@ -101,7 +101,7 @@ class StickyScrollView: UIScrollView {
 
      - parameter imageView: UIImageView
      */
-    func setStickyImage(imageView: UIImageView) {
+    public func setStickyImage(imageView: UIImageView) {
         self.imgView = imageView
     }
 
@@ -110,14 +110,14 @@ class StickyScrollView: UIScrollView {
 
      - parameter height: CGFloat
      */
-    func setStickyDisplayHeight(height: CGFloat) {
+    public func setStickyDisplayHeight(height: CGFloat) {
         self.stickyHeight = height
     }
 
     /**
      This method transform the imageView by scrolling action.
      */
-    func updateFrame() {
+    public func updateFrame() {
         guard let imgView = self.imgView else {
             return
         }

@@ -1,0 +1,6 @@
+framework module StickyScrollView {
+  umbrella header "StickyScrollView-umbrella.h"
+
+  export *
+  module * { export * }
+}

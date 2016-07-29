@@ -1,0 +1,14 @@
+PODS:
+  - StickyScrollView (0.1.0)
+
+DEPENDENCIES:
+  - StickyScrollView (from `../../`)
+
+EXTERNAL SOURCES:
+  StickyScrollView:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  StickyScrollView: 29893583e1d623f2f2355bfa6c97919e6dbf5a5a
+
+COCOAPODS: 0.39.0
