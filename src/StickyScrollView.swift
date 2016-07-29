@@ -8,17 +8,20 @@
 import UIKit
 
 public class StickyScrollView: UIScrollView {
-    private weak var imgView: UIImageView?
+    private weak var imgView: UIView?
     private var stickyHeight: CGFloat = 0
 
     // Image scale ratio, 0 ~ 1.
     private var imageScaleRatio: CGFloat = 1
 
-    // Image alpha ratio, 0 ~ 1
+    // Image alpha ratio, 0 ~ 1.
     private var imageAlphaRatio: CGFloat = 0.7
 
-    // Image y scale offset moving ratio, 0 ~ 1
+    // Image y scale offset moving ratio, 0 ~ 1.
     private var imageParallelRatio: CGFloat = 0.3
+
+    // Gesture is enabled or not in the sticky header area (for this scrollView).
+    private var gestureEnabledInStickyHeader: Bool = true
 
     /// This interceptor concept is referenced from :
     /// - see: http://stackoverflow.com/questions/26953559/in-swift-how-do-i-have-a-uiscrollview-subclass-that-has-an-internal-and-externa
@@ -97,24 +100,6 @@ public class StickyScrollView: UIScrollView {
     }
 
     /**
-     Set the sticky image under the scrollView.
-
-     - parameter imageView: UIImageView
-     */
-    public func setStickyImage(imageView: UIImageView) {
-        self.imgView = imageView
-    }
-
-    /**
-     Set the sticky height of the default image display area.
-
-     - parameter height: CGFloat
-     */
-    public func setStickyDisplayHeight(height: CGFloat) {
-        self.stickyHeight = height
-    }
-
-    /**
      This method transform the imageView by scrolling action.
      */
     public func updateFrame() {
@@ -132,5 +117,92 @@ public class StickyScrollView: UIScrollView {
             imgView.frame = CGRectMake(imgView.frame.origin.x, yOffset * imageParallelRatio, imgView.frame.width, imgView.frame.height)
             imgView.alpha = (stickyHeight - abs(yOffset) * imageAlphaRatio) / stickyHeight
         }
+    }
+
+    /// Let touches pass to the view under this scrollView,
+    /// the gesture event will not working in sticky header area.
+    public override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        if !gestureEnabledInStickyHeader {
+            let disableTouchArea = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.width, stickyHeight)
+            if CGRectContainsPoint(disableTouchArea, point) {
+                return nil
+            }
+        }
+        return self
+    }
+
+    //
+    // MARK:- Config
+    //
+
+    /**
+     Set the sticky image under the scrollView.
+
+     - parameter imageView: UIImageView
+     */
+    public func setStickyImage(imageView: UIImageView) {
+        self.setStickyView(imageView)
+    }
+
+    /**
+     Set the sticky view under the scrollView.
+
+     - parameter view: UIView
+     */
+    public func setStickyView(view: UIView) {
+        self.imgView = view
+    }
+
+    /**
+     Set the sticky height of the default image display area.
+
+     - parameter height: CGFloat
+     */
+    public func setStickyDisplayHeight(height: CGFloat) {
+        self.stickyHeight = height
+    }
+
+    //
+    // MARK:- Optional Config
+    //
+
+    /**
+     Enable gesture in sticky header or not.
+     If your sticky header view is listening gesture events,
+     you should set this value to false,
+     so that the sticky header view can catch the gesture events.
+     The default value is true.
+
+     - parameter enabled: Bool
+     */
+    public func setGestureEnabledInStickyHeader(enabled: Bool) {
+        self.gestureEnabledInStickyHeader = enabled
+    }
+
+    /**
+     This function defines the sticky header scale ratio when user scroll down.
+     The default value is 1.
+     - parameter ratio: CGFloat (0 <= ratio <= 1)
+     */
+    public func setScaleRatio(ratio: CGFloat) {
+        self.imageScaleRatio = ratio
+    }
+
+    /**
+     This function defines the sticky header alpha ratio when user scroll up.
+     The default value is 0.7.
+     - parameter ratio: CGFloat (0 <= ratio <= 1)
+     */
+    public func setAlphaRatio(ratio: CGFloat) {
+        self.imageAlphaRatio = ratio
+    }
+
+    /**
+     This function defines the sticky header move up ratio when user scroll up.
+     The default value is 0.3.
+     - parameter ratio: CGFloat (0 <= ratio <= 1)
+     */
+    public func setParallelRatio(ratio: CGFloat) {
+        self.imageParallelRatio = ratio
     }
 }
