@@ -51,6 +51,51 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 ** Object-C **
 TBD
 
+## Advanced usage
+set scrollView as sticky header view.
+```swift
+import StickyScrollView
+
+// you should use UIScrollViewDelegate here.
+class ViewController: UIViewController, UIScrollViewDelegate {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // ...
+        // init your image1 and image2 here. 
+        // ...
+
+        // Initialize header scroll view
+        let bgScrollView = UIScrollView(frame: image1.frame)
+        bgScrollView.addSubview(image1)
+        bgScrollView.addSubview(image2)
+        bgScrollView.contentSize = CGSize(width: image1.frame.width + image2.frame.width, height: image1.frame.height)
+
+        // Initialize StickyScrollView
+        let scrollView = StickyScrollView(frame: self.view.frame)
+        scrollView.setStickyDisplayHeight(150)
+        scrollView.setStickyView(bgScrollView)
+        scrollView.setGestureEnabledInStickyHeader(false)       // must set to false to disable gesture in sticky scroll view.
+        scrollView.delegate = self
+
+        // add to view
+        self.view.addSubview(imageView)
+        self.view.addSubview(scrollView)
+    }
+}
+```
+
+You can set scale ratio, alpha ratio or parallel moving ratio by your self, just call :
+```swift
+    scrollView.setScaleRatio(1)
+    scrollView.setAlphaRatio(0.7)
+    scrollView.setParallelRatio(0.4)
+```
+
+## Change log
+v0.1.1 - Now support passing gesture to sticky header view, and support UIView as a sticky header.
+v0.1.0 - Initial release
+
 ## Inspired from
 - <https://github.com/jamztang/CSStickyHeaderFlowLayout>
 
