@@ -8,6 +8,8 @@
 
 **Sicky header for UIScrollView in Swift**
 
+<img src="http://i.imgur.com/1urNt0X.gif" />
+
 ## Requirements
 
 ## Installation
