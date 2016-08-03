@@ -112,36 +112,6 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
     }
 
     //
-    // MARK:- Delegate (UIGestureRecognizerDelegate)
-    //
-
-    @nonobjc public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let bkScrollView = self.stickyView as? UIScrollView else {
-            return false
-        }
-        if gestureRecognizer == self.panGestureRecognizer && otherGestureRecognizer == bkScrollView.panGestureRecognizer {
-            let velocity = self.panGestureRecognizer.velocityInView(self)
-            if abs(velocity.x) > abs(velocity.y) {
-                return true
-            }
-        }
-        return false
-    }
-
-    @nonobjc public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let bkScrollView = self.stickyView as? UIScrollView else {
-            return false
-        }
-        if gestureRecognizer == self.panGestureRecognizer && otherGestureRecognizer == bkScrollView.panGestureRecognizer {
-            let velocity = self.panGestureRecognizer.velocityInView(self)
-            if abs(velocity.x) < abs(velocity.y) {
-                return true
-            }
-        }
-        return false
-    }
-
-    //
     // MARK:- Config
     //
 
@@ -203,5 +173,36 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
      */
     public func setParallelRatio(ratio: CGFloat) {
         self.stickyParallelRatio = ratio
+    }
+}
+
+extension StickyScrollView {
+    //
+    // MARK:- Delegate (UIGestureRecognizerDelegate)
+    //
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let bkScrollView = self.stickyView as? UIScrollView else {
+            return false
+        }
+        if gestureRecognizer == self.panGestureRecognizer && otherGestureRecognizer == bkScrollView.panGestureRecognizer {
+            let velocity = self.panGestureRecognizer.velocityInView(self)
+            if abs(velocity.x) > abs(velocity.y) {
+                return true
+            }
+        }
+        return false
+    }
+
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let bkScrollView = self.stickyView as? UIScrollView else {
+            return false
+        }
+        if gestureRecognizer == self.panGestureRecognizer && otherGestureRecognizer == bkScrollView.panGestureRecognizer {
+            let velocity = self.panGestureRecognizer.velocityInView(self)
+            if abs(velocity.x) < abs(velocity.y) {
+                return true
+            }
+        }
+        return false
     }
 }
