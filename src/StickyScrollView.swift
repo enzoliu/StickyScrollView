@@ -18,7 +18,7 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
     private var stickyAlphaRatio: CGFloat = 0.7
 
     // Sticky y scale offset moving ratio, 0 ~ 1.
-    private var stickyParallelRatio: CGFloat = 0.3
+    private var stickyParallelRatio: CGFloat = 0.5
 
     /// This interceptor concept is referenced from :
     /// - see: http://stackoverflow.com/questions/26953559/in-swift-how-do-i-have-a-uiscrollview-subclass-that-has-an-internal-and-externa
@@ -111,19 +111,34 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
         }
     }
 
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    //
+    // MARK:- Delegate (UIGestureRecognizerDelegate)
+    //
+
+    private func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let bkScrollView = self.stickyView as? UIScrollView else {
-            return true
+            return false
         }
         if gestureRecognizer == self.panGestureRecognizer && otherGestureRecognizer == bkScrollView.panGestureRecognizer {
             let velocity = self.panGestureRecognizer.velocityInView(self)
             if abs(velocity.x) > abs(velocity.y) {
-                return false
-            } else {
                 return true
             }
         }
-        return true
+        return false
+    }
+
+    private func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let bkScrollView = self.stickyView as? UIScrollView else {
+            return false
+        }
+        if gestureRecognizer == self.panGestureRecognizer && otherGestureRecognizer == bkScrollView.panGestureRecognizer {
+            let velocity = self.panGestureRecognizer.velocityInView(self)
+            if abs(velocity.x) < abs(velocity.y) {
+                return true
+            }
+        }
+        return false
     }
 
     //
@@ -183,7 +198,7 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
 
     /**
      This function defines the sticky header move up ratio when user scroll up.
-     The default value is 0.3.
+     The default value is 0.5.
      - parameter ratio: CGFloat (0 <= ratio <= 1)
      */
     public func setParallelRatio(ratio: CGFloat) {
