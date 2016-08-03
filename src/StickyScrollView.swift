@@ -115,7 +115,7 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
     // MARK:- Delegate (UIGestureRecognizerDelegate)
     //
 
-    @objc public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    @nonobjc public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let bkScrollView = self.stickyView as? UIScrollView else {
             return false
         }
@@ -128,7 +128,7 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
         return false
     }
 
-    @objc public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    @nonobjc public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let bkScrollView = self.stickyView as? UIScrollView else {
             return false
         }
