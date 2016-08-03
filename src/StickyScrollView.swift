@@ -20,9 +20,6 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
     // Sticky y scale offset moving ratio, 0 ~ 1.
     private var stickyParallelRatio: CGFloat = 0.3
 
-    // Gesture is enabled or not in the sticky header area (for this scrollView).
-    private var gestureEnabledInStickyHeader: Bool = true
-
     /// This interceptor concept is referenced from :
     /// - see: http://stackoverflow.com/questions/26953559/in-swift-how-do-i-have-a-uiscrollview-subclass-that-has-an-internal-and-externa
     public class DelegateProxy: NSObject, UIScrollViewDelegate {
@@ -165,19 +162,6 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
     //
     // MARK:- Optional Config
     //
-
-    /**
-     Enable gesture in sticky header or not.
-     If your sticky header view is listening gesture events,
-     you should set this value to false,
-     so that the sticky header view can catch the gesture events.
-     The default value is true.
-
-     - parameter enabled: Bool
-     */
-    public func setGestureEnabledInStickyHeader(enabled: Bool) {
-        self.gestureEnabledInStickyHeader = enabled
-    }
 
     /**
      This function defines the sticky header scale ratio when user scroll down.
