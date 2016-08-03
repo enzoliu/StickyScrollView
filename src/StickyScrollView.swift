@@ -7,18 +7,18 @@
 
 import UIKit
 
-public class StickyScrollView: UIScrollView {
-    private weak var imgView: UIView?
+public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
+    private weak var stickyView: UIView?
     private var stickyHeight: CGFloat = 0
 
-    // Image scale ratio, 0 ~ 1.
-    private var imageScaleRatio: CGFloat = 1
+    // Sticky scale ratio, 0 ~ 1.
+    private var stickyScaleRatio: CGFloat = 1
 
-    // Image alpha ratio, 0 ~ 1.
-    private var imageAlphaRatio: CGFloat = 0.7
+    // Sticky alpha ratio, 0 ~ 1.
+    private var stickyAlphaRatio: CGFloat = 0.7
 
-    // Image y scale offset moving ratio, 0 ~ 1.
-    private var imageParallelRatio: CGFloat = 0.3
+    // Sticky y scale offset moving ratio, 0 ~ 1.
+    private var stickyParallelRatio: CGFloat = 0.3
 
     // Gesture is enabled or not in the sticky header area (for this scrollView).
     private var gestureEnabledInStickyHeader: Bool = true
@@ -65,16 +65,6 @@ public class StickyScrollView: UIScrollView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         super.delegate = delegateProxy
-
-        // -----------------------------------------------
-        // DON'T CHANGE THIS (OR YOUR WILL GET NO EFFECT).
-        // -----------------------------------------------
-        // To show the image under this scrollView,
-        // we need background color to be clear color.
-        // If you need to set background color,
-        // add a container in this scroll view,
-        // and you can set any background color you want.
-        self.backgroundColor = UIColor.clearColor()
     }
 
     /**
@@ -103,32 +93,40 @@ public class StickyScrollView: UIScrollView {
      This method transform the imageView by scrolling action.
      */
     public func updateFrame() {
-        guard let imgView = self.imgView else {
+        guard let stickyView = self.stickyView else {
             return
         }
-        let yOffset = -self.contentOffset.y
-        if yOffset > 0 {
-            let scale = 1 + (yOffset / imgView.frame.height) * imageScaleRatio
-            imgView.transform = CGAffineTransformMakeScale(scale, scale)
-            imgView.frame = CGRectMake(imgView.frame.origin.x, 0, imgView.frame.width, imgView.frame.height)
-            imgView.alpha = 1
+        if self.contentOffset.y < 0 {
+            let scale = 1 + (abs(self.contentOffset.y) / stickyView.frame.height) * stickyScaleRatio
+            stickyView.transform = CGAffineTransformMakeScale(scale, scale)
+            stickyView.frame = CGRectMake(stickyView.frame.origin.x,
+                                          self.contentOffset.y,
+                                          stickyView.frame.width,
+                                          stickyView.frame.height)
+            stickyView.alpha = 1
 
-        } else if yOffset >= -stickyHeight {
-            imgView.frame = CGRectMake(imgView.frame.origin.x, yOffset * imageParallelRatio, imgView.frame.width, imgView.frame.height)
-            imgView.alpha = (stickyHeight - abs(yOffset) * imageAlphaRatio) / stickyHeight
+        } else if self.contentOffset.y <= stickyHeight {
+            stickyView.frame = CGRectMake(stickyView.frame.origin.x,
+                                          self.contentOffset.y * stickyParallelRatio,
+                                          stickyView.frame.width,
+                                          stickyView.frame.height)
+            stickyView.alpha = (stickyHeight - self.contentOffset.y * stickyAlphaRatio) / stickyHeight
         }
     }
 
-    /// Let touches pass to the view under this scrollView,
-    /// the gesture event will not working in sticky header area.
-    public override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        if !gestureEnabledInStickyHeader {
-            let disableTouchArea = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.width, stickyHeight)
-            if CGRectContainsPoint(disableTouchArea, point) {
-                return nil
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let bkScrollView = self.stickyView as? UIScrollView else {
+            return true
+        }
+        if gestureRecognizer == self.panGestureRecognizer && otherGestureRecognizer == bkScrollView.panGestureRecognizer {
+            let velocity = self.panGestureRecognizer.velocityInView(self)
+            if abs(velocity.x) > abs(velocity.y) {
+                return false
+            } else {
+                return true
             }
         }
-        return self
+        return true
     }
 
     //
@@ -150,7 +148,9 @@ public class StickyScrollView: UIScrollView {
      - parameter view: UIView
      */
     public func setStickyView(view: UIView) {
-        self.imgView = view
+        self.stickyView = view
+        self.addSubview(view)
+        view.layer.zPosition = -1
     }
 
     /**
@@ -185,7 +185,7 @@ public class StickyScrollView: UIScrollView {
      - parameter ratio: CGFloat (0 <= ratio <= 1)
      */
     public func setScaleRatio(ratio: CGFloat) {
-        self.imageScaleRatio = ratio
+        self.stickyScaleRatio = ratio
     }
 
     /**
@@ -194,7 +194,7 @@ public class StickyScrollView: UIScrollView {
      - parameter ratio: CGFloat (0 <= ratio <= 1)
      */
     public func setAlphaRatio(ratio: CGFloat) {
-        self.imageAlphaRatio = ratio
+        self.stickyAlphaRatio = ratio
     }
 
     /**
@@ -203,6 +203,6 @@ public class StickyScrollView: UIScrollView {
      - parameter ratio: CGFloat (0 <= ratio <= 1)
      */
     public func setParallelRatio(ratio: CGFloat) {
-        self.imageParallelRatio = ratio
+        self.stickyParallelRatio = ratio
     }
 }
