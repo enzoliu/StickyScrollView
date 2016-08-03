@@ -74,12 +74,10 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         // Initialize StickyScrollView
         let scrollView = StickyScrollView(frame: self.view.frame)
         scrollView.setStickyDisplayHeight(150)
-        scrollView.setStickyView(bgScrollView)
-        scrollView.setGestureEnabledInStickyHeader(false)       // must set to false to disable gesture in sticky scroll view.
+        scrollView.setStickyView(bgScrollView)  // This will add bgScrollView into scrollView
         scrollView.delegate = self
 
         // add to view
-        self.view.addSubview(imageView)
         self.view.addSubview(scrollView)
     }
 }
@@ -93,6 +91,7 @@ You can set scale ratio, alpha ratio or parallel moving ratio by your self, just
 ```
 
 ## Change log
+v0.1.2 - Now support vertical scrolling behavior in sticky view area.
 v0.1.1 - Now support passing gesture to sticky header view, and support UIView as a sticky header.  
 v0.1.0 - Initial release
 
