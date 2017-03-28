@@ -42,7 +42,7 @@ public class StickyScrollView: UIScrollView, UIGestureRecognizerDelegate {
          
          - parameter scrollView: UIScrollView
          */
-        public func scrollViewDidScroll(scrollView: UIScrollView) {
+        public func scrollViewDidScroll(_ scrollView: UIScrollView) {
             if let sc = scrollView as? StickyScrollView {
                 sc.updateFrame()
             }
