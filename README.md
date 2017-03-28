@@ -3,8 +3,6 @@
 [![Version](https://img.shields.io/cocoapods/v/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
 [![License](https://img.shields.io/cocoapods/l/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
 [![Platform](https://img.shields.io/cocoapods/p/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
-![](https://img.shields.io/badge/language-swift_2\+-brightgreen.svg)
-[![CI Status](http://img.shields.io/travis/Enzo Liu/StickyScrollView.svg?style=flat)](https://travis-ci.org/Enzo Liu/StickyScrollView)
 
 **Sicky header for UIScrollView in Swift**
 
