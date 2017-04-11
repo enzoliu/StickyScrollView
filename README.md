@@ -3,8 +3,6 @@
 [![Version](https://img.shields.io/cocoapods/v/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
 [![License](https://img.shields.io/cocoapods/l/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
 [![Platform](https://img.shields.io/cocoapods/p/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
-![](https://img.shields.io/badge/language-swift_2\+-brightgreen.svg)
-[![CI Status](http://img.shields.io/travis/Enzo Liu/StickyScrollView.svg?style=flat)](https://travis-ci.org/Enzo Liu/StickyScrollView)
 
 **Sicky header for UIScrollView in Swift**
 
@@ -22,7 +20,7 @@ pod 'StickyScrollView'
 ```
 
 ## Usage
-** Swift 2.x **
+** Swift 3.x **
 ```swift
 import StickyScrollView
 
@@ -37,9 +35,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
         // Initialize StickyScrollView
         let scrollView = StickyScrollView(frame: self.view.frame)
-        scrollView.setStickyDisplayHeight(150)
-        scrollView.setStickyImage(imageView)
+        scrollView.setStickyDisplayHeight(height: 150)
+        scrollView.setStickyImage(imageView: imageView)
         scrollView.delegate = self
+
+        // ... 
+        // adjust scrollView contentSize
+        // ...
 
         // add to view
         self.view.addSubview(imageView)
@@ -73,9 +75,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
         // Initialize StickyScrollView
         let scrollView = StickyScrollView(frame: self.view.frame)
-        scrollView.setStickyDisplayHeight(150)
-        scrollView.setStickyView(bgScrollView)  // This will add bgScrollView into scrollView
+        scrollView.setStickyDisplayHeight(height: 150)
+        scrollView.setStickyView(view: bgScrollView)  // This will add bgScrollView into scrollView
         scrollView.delegate = self
+
+        // ... 
+        // adjust scrollView contentSize
+        // ...
 
         // add to view
         self.view.addSubview(scrollView)
@@ -85,12 +91,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
 You can set scale ratio, alpha ratio or parallel moving ratio by your self, just call :
 ```swift
-    scrollView.setScaleRatio(1)
-    scrollView.setAlphaRatio(0.7)
-    scrollView.setParallelRatio(0.4)
+    scrollView.setScaleRatio(ratio: 1)
+    scrollView.setAlphaRatio(ratio: 0.7)
+    scrollView.setParallelRatio(ratio: 0.4)
 ```
 
 ## Change log
+v0.1.6 - Bump to Swift 3
 v0.1.4 - Fix pod [cannot satisfy optional requirement of @objc protocol] error.  
 v0.1.3 - Fix vertical scrolling bug.  
 v0.1.2 - Now support vertical scrolling behavior in sticky view area.  
