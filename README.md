@@ -19,6 +19,9 @@ it, simply add the following line to your Podfile:
 pod 'StickyScrollView'
 ```
 
+If you're looking for Swift 2 version, you can get it from branch 'swift2'.  
+  
+  
 ## Usage
 ** Swift 3.x **
 ```swift
@@ -50,6 +53,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 }
 
 ```
+
 ** Object-C **
 TBD
 
