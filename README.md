@@ -55,8 +55,40 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 ```
 
 ** Object-C **
-TBD
+In your .h file, you need to add `UIScrollViewDelegate` :  
+```objective-c
+@interface ViewController : UIViewController <UIScrollViewDelegate>
+// ...
+@end
+```  
+  
+And implement `StickyScrollView` in your .m file :  
+```objective-c
+@import StickyScrollView;
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    // ...
+    // init your image here. (imageView)
+    // ...
+
+    // Initialize StickyScrollView
+    StickyScrollView *scrollView = [[StickyScrollView alloc] initWithFrame: [self.view frame]];
+    [scrollView setStickyImageWithImageView: imageView];
+    [scrollView setStickyDisplayHeightWithHeight: 150];
+    scrollView.delegate = self;
+
+    // ... 
+    // adjust scrollView contentSize
+    // ...
+
+    // add to view
+    [self.view.addSubview: imageView];
+    [self.view.addSubview: scrollView];
+}
+```  
+  
 ## Advanced usage
 set scrollView as sticky header view.
 ```swift
