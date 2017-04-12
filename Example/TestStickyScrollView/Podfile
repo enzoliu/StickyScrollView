@@ -1,6 +1,0 @@
-
-use_frameworks!
-
-target 'TestStickyScrollView' do
-  pod 'StickyScrollView', :path => '../../'
-end
