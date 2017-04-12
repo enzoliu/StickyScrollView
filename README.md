@@ -54,7 +54,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
 ```
 
-** Object-C **
+** Object-C **  
 In your .h file, you need to add `UIScrollViewDelegate` :  
 ```objective-c
 @interface ViewController : UIViewController <UIScrollViewDelegate>
