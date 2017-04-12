@@ -97,7 +97,7 @@ You can set scale ratio, alpha ratio or parallel moving ratio by your self, just
 ```
 
 ## Change log
-v0.1.6 - Bump to Swift 3
+v0.1.6 - Bump to Swift 3.  
 v0.1.4 - Fix pod [cannot satisfy optional requirement of @objc protocol] error.  
 v0.1.3 - Fix vertical scrolling bug.  
 v0.1.2 - Now support vertical scrolling behavior in sticky view area.  
