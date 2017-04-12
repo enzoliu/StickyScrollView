@@ -3,8 +3,6 @@
 [![Version](https://img.shields.io/cocoapods/v/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
 [![License](https://img.shields.io/cocoapods/l/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
 [![Platform](https://img.shields.io/cocoapods/p/StickyScrollView.svg?style=flat)](http://cocoapods.org/pods/StickyScrollView)
-![](https://img.shields.io/badge/language-swift_2\+-brightgreen.svg)
-[![CI Status](http://img.shields.io/travis/Enzo Liu/StickyScrollView.svg?style=flat)](https://travis-ci.org/Enzo Liu/StickyScrollView)
 
 **Sicky header for UIScrollView in Swift**
 
@@ -91,6 +89,7 @@ You can set scale ratio, alpha ratio or parallel moving ratio by your self, just
 ```
 
 ## Change log
+v0.1.4 - Fix pod [cannot satisfy optional requirement of @objc protocol] error.  
 v0.1.3 - Fix vertical scrolling bug.  
 v0.1.2 - Now support vertical scrolling behavior in sticky view area.  
 v0.1.1 - Now support passing gesture to sticky header view, and support UIView as a sticky header.  
@@ -98,10 +97,6 @@ v0.1.0 - Initial release
 
 ## Inspired from
 - <https://github.com/jamztang/CSStickyHeaderFlowLayout>
-
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## License
 
