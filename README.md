@@ -23,7 +23,7 @@ If you're looking for Swift 2 version, you can get it from branch 'swift2'.
   
   
 ## Usage
-** Swift 3.x **
+**Swift 3**
 ```swift
 import StickyScrollView
 
@@ -54,7 +54,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 
 ```
 
-** Object-C **  
+**Object-C**  
 In your .h file, you need to add `UIScrollViewDelegate` :  
 ```objective-c
 @interface ViewController : UIViewController <UIScrollViewDelegate>
@@ -90,7 +90,7 @@ And implement `StickyScrollView` in your .m file :
 ```  
   
 ## Advanced usage
-set scrollView as sticky header view.
+Set scrollView as sticky header view.
 ```swift
 import StickyScrollView
 
